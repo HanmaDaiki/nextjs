@@ -27,11 +27,13 @@ export const SignupForm = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'}/api/auth/login`, {
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'}/api/auth/signup`, {
       method: "POST",
       body: JSON.stringify({
         email,
         password,
+        name,
+        surname
       })
     })
 

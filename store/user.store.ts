@@ -21,7 +21,7 @@ export const useUserStore = create<UserState>((set) => ({
     const res = await fetch(
       `${
         process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000"
-      }/api/auth/login`,
+      }/api/users/me`,
       {
         method: "GET",
         headers: {

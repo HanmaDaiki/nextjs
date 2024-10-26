@@ -6,7 +6,7 @@ export const LoginForm = () => {
     const [password, setPassword] = useState("");
 
     const getUser = useUserStore((state) => state.getUser);
-    console.log(process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/');
+
     const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(e.target.value);
     }
@@ -23,9 +23,11 @@ export const LoginForm = () => {
                 email,
                 password,
             })
-        })
-
-        getUser();
+        }).then(res => {
+            if (res.ok) {
+                getUser();
+            }
+        });
     }
 
     return (
