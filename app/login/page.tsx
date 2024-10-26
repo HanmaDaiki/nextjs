@@ -1,20 +1,20 @@
 "use client";
-import { Content } from "@/components/Content";
-import { useUserStore } from "@/store/user.store";
 import { useEffect } from "react";
+import { useUserStore } from "@/store/user.store";
 import { redirect } from "next/navigation";
+import { LoginForm } from "@/components/LoginForm/LoginForm";
 import { Preloader } from "@/components/Preloader/Preloader";
 
-export default function Home() {
+export default function Login() {
   const { getUser, isAuth, isLoading } = useUserStore((state) => state);
 
   useEffect(() => {
     getUser();
-  }, []);
+  }, [])
 
   useEffect(() => {
-    if (!isAuth) {
-      redirect("/login");
+    if (isAuth) {
+      redirect("/");
     }
   }, [isAuth]);
 
@@ -23,8 +23,6 @@ export default function Home() {
   }
 
   return (
-    <div className="flex justify-center items-center flex-col px-2">
-      <Content />
-    </div>
-  );
+    <LoginForm />
+  )
 }
