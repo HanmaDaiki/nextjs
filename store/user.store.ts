@@ -18,12 +18,17 @@ export const useUserStore = create<UserState>((set) => ({
   isLoading: true,
   isAuth: false,
   getUser: async () => {
-    const res = await fetch("http://localhost:3000/api/users/me", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const res = await fetch(
+      `${
+        process.env.NEXT_PUBLIC_API_URL && "http://localhost:3000/"
+      }api/auth/login`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     if (!res.ok) {
       set({
         name: "",
