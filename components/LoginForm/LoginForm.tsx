@@ -6,7 +6,7 @@ export const LoginForm = () => {
     const [password, setPassword] = useState("");
 
     const getUser = useUserStore((state) => state.getUser);
-
+    console.log(process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/');
     const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(e.target.value);
     }
@@ -17,7 +17,7 @@ export const LoginForm = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        await fetch(`${process.env.NEXT_PUBLIC_API_URL && 'http://localhost:3000/'}api/auth/login`, {
+        await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'}/api/auth/login`, {
             method: "POST",
             body: JSON.stringify({
                 email,

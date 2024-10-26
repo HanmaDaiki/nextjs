@@ -20,8 +20,8 @@ export const useUserStore = create<UserState>((set) => ({
   getUser: async () => {
     const res = await fetch(
       `${
-        process.env.NEXT_PUBLIC_API_URL && "http://localhost:3000/"
-      }api/auth/login`,
+        process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000"
+      }/api/auth/login`,
       {
         method: "GET",
         headers: {
