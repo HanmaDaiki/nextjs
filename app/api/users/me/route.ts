@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
 
-export async function GET(req: Request) {
+export async function GET() {
   const prisma = new PrismaClient();
 
   try {
@@ -47,7 +47,7 @@ export async function GET(req: Request) {
       status: 200,
     });
   } catch (error) {
-    return new Response(JSON.stringify({ error: "Internal Server Error" }), {
+    return new Response(JSON.stringify({ error: "Internal Server Error " + error }), {
       status: 500,
     });
   }
@@ -99,7 +99,7 @@ export async function PATCH(req: Request) {
         status: 200,
       });
     } catch (error) {
-      return new Response(JSON.stringify({ error: "Internal Server Error" }), {
+      return new Response(JSON.stringify({ error: "Internal Server Error " + error}), {
         status: 500,
       });
     }

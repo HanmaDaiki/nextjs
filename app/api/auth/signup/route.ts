@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
 
-export async function POST(req: Request, res: Response) {
+export async function POST(req: Request) {
   try {
     const prisma = new PrismaClient();
     const { email, password, name, surname } = await req.json();
@@ -39,7 +39,7 @@ export async function POST(req: Request, res: Response) {
     }
   } catch (error) {
     return Response.json(
-      { error: "Failed to create user" },
+      { error: "Failed to create user " + error },
       { status: 500 }
     );
   }
