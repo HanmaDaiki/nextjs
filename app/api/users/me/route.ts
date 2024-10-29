@@ -1,6 +1,4 @@
 import { PrismaClient } from "@prisma/client";
-import { cookies } from "next/headers";
-import jwt from "jsonwebtoken";
 import { NextRequest } from "next/server";
 
 export async function GET(request: NextRequest & Response) {

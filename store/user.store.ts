@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { config } from "@/config";
 
 export interface UserState {
   isAuth: boolean;
@@ -8,6 +9,7 @@ export interface UserState {
   email: string;
   grade: number;
   getUser: () => Promise<void>;
+  logout: () => Promise<void>;
 }
 
 export const useUserStore = create<UserState>((set) => ({
@@ -17,18 +19,30 @@ export const useUserStore = create<UserState>((set) => ({
   grade: 0,
   isLoading: true,
   isAuth: false,
+  logout: async () => {
+    set({
+      isLoading: true
+    })
+
+    await fetch(`${config.apiURL}/api/auth/logout`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    set({
+      isLoading: false,
+      isAuth: false,
+    });
+  },
   getUser: async () => {
-    const res = await fetch(
-      `${
-        process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000"
-      }/api/users/me`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const res = await fetch(`${config.apiURL}/api/users/me`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     if (!res.ok) {
       set({
         name: "",

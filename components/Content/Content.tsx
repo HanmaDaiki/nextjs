@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { Profile } from "../Profile";
-import { Shifts } from "../Shifts";
+import { Profile } from "@/components/Profile";
+import { Shifts } from "@/components/Shifts";
+import { Header } from "@/components/Header";
 
 export type Shift = {
     id: number;
@@ -82,10 +83,11 @@ export default function Content() {
 
     return (
         <>
+            <Header />
             <Profile />
             <ul className="flex gap-4 p-5">
-                <li><button onClick={() => handleChangeTab("shifts")} className={`${tab === 'shifts' ? 'text-white' : 'text-gray-500'}`}>Смены</button></li>
-                <li><button onClick={() => handleChangeTab("statistics")} className={`${tab === 'statistics' ? 'text-white' : 'text-gray-500'}`}>Статистика</button></li>
+                <li><button onClick={() => handleChangeTab("shifts")} className={`${tab === 'shifts' ? 'text-blue-500' : 'text-gray-500'}`}>Смены</button></li>
+                <li><button onClick={() => handleChangeTab("statistics")} className={`${tab === 'statistics' ? 'text-blue-500' : 'text-gray-500'}`}>Статистика</button></li>
             </ul>
 
             {tab === "shifts" && <Shifts shifts={mockShifts} />}
