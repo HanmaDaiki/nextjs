@@ -1,9 +1,7 @@
 "use client";
-
 import { useState } from "react";
 import { Profile } from "@/components/Profile";
 import { Shifts } from "@/components/Shifts";
-import { Header } from "@/components/Header";
 
 export type Shift = {
     id: number;
@@ -83,7 +81,6 @@ export default function Content() {
 
     return (
         <>
-            <Header />
             <Profile />
             <ul className="flex gap-4 p-5">
                 <li><button onClick={() => handleChangeTab("shifts")} className={`${tab === 'shifts' ? 'text-blue-500' : 'text-gray-500'}`}>Смены</button></li>

@@ -1,29 +1,14 @@
 "use client";
-import { useEffect } from "react";
 import { useUserStore } from "@/store/user.store";
-import { redirect } from "next/navigation";
 import { SignupForm } from "@/components/SignupForm/SignupForm";
 import { Preloader } from "@/components/Preloader/Preloader";
+import { Main } from "@/components/Main";
 
-export default function Signup() {
-
-  const { getUser, isAuth, isLoading } = useUserStore((state) => state);
-
-  useEffect(() => {
-    getUser();
-  }, [])
-
-  useEffect(() => {
-    if (isAuth) {
-      redirect("/");
-    }
-  }, [isAuth]);
-
-  if (isLoading) {
-    return <Preloader />
-  }
+export default function SignupPage() {
+  const { isLoading } = useUserStore((state) => state);
 
   return (
-    <SignupForm />
+    <Main>{isLoading ? <Preloader /> : <SignupForm />}</Main>
+
   )
 }

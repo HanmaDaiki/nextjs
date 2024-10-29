@@ -21,8 +21,8 @@ export const useUserStore = create<UserState>((set) => ({
   isAuth: false,
   logout: async () => {
     set({
-      isLoading: true
-    })
+      isLoading: true,
+    });
 
     await fetch(`${config.apiURL}/api/auth/logout`, {
       method: "POST",
@@ -37,30 +37,35 @@ export const useUserStore = create<UserState>((set) => ({
     });
   },
   getUser: async () => {
+    set({
+      isLoading: true,
+    });
+
     const res = await fetch(`${config.apiURL}/api/users/me`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
     });
-    if (!res.ok) {
-      set({
-        name: "",
-        surname: "",
-        email: "",
-        grade: 0,
-        isAuth: false,
-        isLoading: false,
-      });
-    } else {
+
+    if (res.ok) {
       const data = await res.json();
       set({
+        isAuth: true,
+        isLoading: false,
         name: data.name,
         surname: data.surname,
         email: data.email,
         grade: data.grade,
-        isAuth: true,
+      });
+    } else {
+      set({
+        isAuth: false,
         isLoading: false,
+        name: "",
+        surname: "",
+        email: "",
+        grade: 0,
       });
     }
   },
