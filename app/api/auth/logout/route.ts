@@ -12,7 +12,7 @@ export async function POST() {
         return response;
     } catch (error) {
         return NextResponse.json(
-            { error: "Error during logout" },
+            { error: "Error during logout " + error },
             { status: 500 }
         );
     }
