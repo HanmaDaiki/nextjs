@@ -1,33 +1,17 @@
 import { PrismaClient } from "@prisma/client";
 import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
+import { NextRequest } from "next/server";
 
-export async function GET() {
+export async function GET(request: NextRequest & Response) {
   const prisma = new PrismaClient();
 
   try {
-    const c = await cookies();
-    const token = c.get("token")?.value;
-
-    if (!token) {
-      return new Response(JSON.stringify({ error: "Unauthorized" }), {
-        status: 401,
-      });
-    }
-
-    const payload = jwt.decode(token || "", { complete: true })?.payload as {
-      id: number;
-    };
-
-    if (typeof payload.id !== "number") {
-      return new Response(JSON.stringify({ error: "Unauthorized" }), {
-        status: 401,
-      });
-    }
+    const payload = request.headers.get('user-id');
 
     const user = await prisma.user.findFirst({
       where: {
-        id: payload.id,
+        id: Number(payload),
       },
       select: {
         email: true,
@@ -53,33 +37,16 @@ export async function GET() {
   }
 }
 
-export async function PATCH(req: Request) {
+export async function PATCH(request: NextRequest & Request) {
     const prisma = new PrismaClient();
-    const { email, name, surname, grade } = await req.json();
+    const { email, name, surname, grade } = await request.json();
 
     try {
-      const c = await cookies();
-      const token = c.get("token")?.value;
-  
-      if (!token) {
-        return new Response(JSON.stringify({ error: "Unauthorized" }), {
-          status: 401,
-        });
-      }
-  
-      const payload = jwt.decode(token || "", { complete: true })?.payload as {
-        id: number;
-      };
-  
-      if (typeof payload.id !== "number") {
-        return new Response(JSON.stringify({ error: "Unauthorized" }), {
-          status: 401,
-        });
-      }
+      const payload = request.headers.get('user-id');
   
       const user = await prisma.user.update({
         where: {
-          id: payload.id,
+          id: Number(payload),
         },
         data: {
           email,
